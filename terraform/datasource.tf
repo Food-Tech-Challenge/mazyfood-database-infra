@@ -4,7 +4,8 @@ data "aws_subnets" "private" {
     values = [var.vpc_id]
   }
 
-  tags = {
-    Tier = "private"
+  filter {
+    name   = "map-public-ip-on-launch"
+    values = ["false"]
   }
 }
