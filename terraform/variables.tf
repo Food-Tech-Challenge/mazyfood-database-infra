@@ -9,6 +9,5 @@ variable "project" {
 }
 
 variable "vpc_id" {
-  type    = string
-  default = "vpc-079aafe68e3a8b288"
+  type = string
 }
