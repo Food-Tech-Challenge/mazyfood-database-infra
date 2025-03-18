@@ -7,7 +7,3 @@ variable "project" {
   type    = string
   default = "mazyfood"
 }
-
-variable "vpc_id" {
-  type = string
-}

@@ -1,7 +1,14 @@
+data "aws_vpc" "selected_vpc" {
+  filter {
+    name   = "tag:Name"
+    values = ["mazy-food-vpc"]
+  }
+}
+
 data "aws_subnets" "private" {
   filter {
     name   = "vpc-id"
-    values = [var.vpc_id]
+    values = [data.aws_vpc.selected_vpc.id]
   }
 
   filter {

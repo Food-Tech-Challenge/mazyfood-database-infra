@@ -9,7 +9,7 @@ resource "aws_db_subnet_group" "subnet_group" {
 
 resource "aws_security_group" "security_group" {
   name   = "${var.project}-security-group-db"
-  vpc_id = var.vpc_id
+  vpc_id = data.aws_vpc.selected_vpc.id
 
   ingress {
     from_port   = 5432
