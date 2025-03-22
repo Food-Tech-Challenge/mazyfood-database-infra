@@ -1,0 +1,40 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch:
+
+env:
+  TF_LOG: INFO
+  BUCKET_TF_STATE: ${{ vars.BUCKET_TF_STATE}}
+
+jobs:
+  terraform-destroy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./terraform
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+          aws-session-token: "${{ secrets.AWS_SESSION_TOKEN }}"
+          aws-region: "${{ vars.AWS_REGION }}"
+
+      - name: Terraform Setup
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init -backend-config="bucket=$BUCKET_TF_STATE"
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve tfplan
