@@ -7,6 +7,7 @@ resource "aws_db_instance" "db_instance" {
 
   username = "mazyadmin"
   password = "mazyadmin"
+  db_name  = "mazyfood"
 
   vpc_security_group_ids = [aws_security_group.security_group.id]
   db_subnet_group_name   = aws_db_subnet_group.subnet_group.name

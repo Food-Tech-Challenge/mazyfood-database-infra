@@ -1,7 +1,7 @@
 data "aws_vpc" "selected_vpc" {
   filter {
     name   = "tag:Name"
-    values = ["mazy-food-vpc"]
+    values = ["${var.project}-vpc"]
   }
 }
 
